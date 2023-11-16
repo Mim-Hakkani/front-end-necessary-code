@@ -1,7 +1,6 @@
 
-
-
 // ================== Paypal Payment   ========================//
+
 
 // step 1 : install react-paypal-button-v2
 
@@ -9,7 +8,7 @@ import { PayPalButton } from "react-paypal-button-v2";
 
  // step 2 : add in react compoent or pages 
 
- const [scriptLoaded, setScriptLoaded] = useState(false);
+const [scriptLoaded, setScriptLoaded] = useState(false);
 
 useEffect(() => {
     const addPaypalScript = () => {
