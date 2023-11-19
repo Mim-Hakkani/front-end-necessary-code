@@ -1,0 +1,31 @@
+<Button
+	variant='outlined'
+	sx={{
+		border: '1px solid #fff',
+		fontWeight: '500',
+		p: '5px 23px',
+		textTransform: 'capitalize',
+		borderRadius: '17px',
+		fontSize: '14px',
+		fontFamily: 'roboto',
+		backgroundColor: '#fff',
+		color: '#2b2b2b',
+		':hover': {
+			background: '#fff',
+		},
+	}}
+	color='inherit'
+
+    /*************** 
+     login redirect main code  
+
+     1.form er pore je path name dibo sei path name e redirect hobe 
+     2. conditionally check korbo token is here or not 
+      
+     * ********************** */
+
+	onClick={() => router.push(`/login?from=${router.asPath}`)}>
+	Login
+
+    {/* /***************************************************** */}
+</Button>;
