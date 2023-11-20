@@ -5,4 +5,5 @@
 * after logout redirect to current pages 
 * search-product-matched-bold
 * material Table pagination
-* placeholder color,size,and edit 
+* placeholder color,size,and edit
+* autocomplete form with (Select data and add )
