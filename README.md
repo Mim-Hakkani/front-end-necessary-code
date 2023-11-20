@@ -5,3 +5,4 @@
 * after logout redirect to current pages 
 * search-product-matched-bold
 * material Table pagination
+* placeholder color,size,and edit 
