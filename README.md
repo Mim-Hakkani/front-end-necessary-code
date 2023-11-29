@@ -9,3 +9,4 @@
 * autocomplete form with (Select data and add )
 * default select value using edit any form
 * show followers,view,sold,numbers like as youTube 4.5K 4M
+* tags input works as tags and click close then remove from array 
