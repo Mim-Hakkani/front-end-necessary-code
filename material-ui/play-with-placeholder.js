@@ -11,7 +11,15 @@ sx={{
         fontFamily:'Times New Roman',
         fontSize:'17px' 
       },
-   
+      
+      // default value styles 
+      
+        '& input': {
+						color: 'red',
+						fontSize:'14px',
+						color:'#2b2b2b'
+					}
+
 }}
 />
 
