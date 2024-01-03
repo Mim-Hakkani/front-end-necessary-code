@@ -97,3 +97,68 @@ useEffect(()=>{
 						<MenuItem value='B-'>B-</MenuItem>
 						<MenuItem value='O-'>O-</MenuItem>
 					</Select>
+					
+					
+					
+
+/**************************************************** perfect select all in one **************************
+ 1.show placeholder 
+ 2.after select then show data 
+ 3.show name but selected id 
+ 4. using filter to show data 
+ 
+ here is the code : 
+ 
+ <Select
+	labelId='demo-select-small'
+	id='demo-select-large'
+	size='small'
+	required
+	name='cardType'
+	value={cardType}
+	fullWidth
+	IconComponent={KeyboardArrowDownIcon}
+	onChange={(e) => setCardType(e.target.value)}
+	renderValue={(value) =>
+		value ? (singleCardType?.node?.description || cardType ): 'Select card type'
+	}
+	sx={{
+		fontSize: '14px',
+		color:
+			cardType !== 'Select card type'
+				? '#2b2b2b'
+				: '#9D9D9D',
+		width: '260px',
+		py: '3px',
+		background: '#fff',
+	}}
+	MenuProps={{
+		anchorOrigin: {
+			vertical: 'bottom',
+			horizontal: 'left',
+		},
+		transformOrigin: {
+			vertical: 'top',
+			horizontal: 'left',
+		},
+		getContentAnchorEl: null,
+	}}>
+	{cardTypeData?.cardTypeAll?.edges?.map((cardList) => (
+		<MenuItem
+			value={cardList?.node?.id}
+			key={cardList?.node?.id}>
+			{cardList?.node?.description}
+		</MenuItem>
+	))}
+</Select>
+
+
+
+/************************* remove border in textField ***********************************/
+
+  '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        border: 'none', // Remove the border
+      },
+    },
+
