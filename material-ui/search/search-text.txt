@@ -1,0 +1,42 @@
+  /********************  search by name name if matched then filter it ***************************
+  
+  step : 1
+  
+  const [categorySearch, setCategorySearch] = useState("");
+
+  const handleCategorySearch = () => {
+    const eventData = event.target.value;
+    setCategorySearch(eventData);
+  };
+
+  const searchKeywords = categorySearch
+    .split(" ")
+    .map((keyword) => keyword.toLowerCase()); // ['sdfsd']
+
+  // category search data
+
+  const categorySearchData = allCategoryData?.categories?.edges?.filter((cat) =>
+    searchKeywords.some((keyword) =>
+      cat?.node?.name.toLowerCase().includes(keyword)
+    )
+  );
+  
+  
+  step 2 :  jsx elements 
+  
+  
+               <input
+                    type="text"
+                    placeholder="Search Category"
+                    style={{
+                      padding: "12px",
+                      backgroundColor: "transparent",
+                      color: "#fff",
+                      outline: 0,
+                      border: "0px solid #020E16",
+                      borderRadius: "20px",
+                      margin: "0px 10px",
+                      width: "85%",
+                    }}
+                    onChange={handleCategorySearch}
+                  />

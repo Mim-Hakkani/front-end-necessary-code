@@ -1,0 +1,157 @@
+  /******************** sorting accending or decending order like price name other  ***************************
+  
+  
+  functionality for sorting 
+   1. price low to high (name wise sort)
+   2. price high to low (name wise sort)
+   3. checked or unchecked
+   4. Ratting wise 
+   5. price min to max 
+   6. price max to min 
+   7. new release 
+   8. finally reset all sorting 
+   
+   
+   
+   step 1 :
+   
+  const [open, setOpen] = useState(false);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [rating, setRating] = useState('');
+  const [value, setValue] = useState("min");
+  const [stockChecked, setStockChecked] = useState(true);
+  const [showAll, setShowAll] = useState(false);
+  const [newRelease, setNewRelease] = useState(false);
+  const [discountLowToHigh, setDiscountLowToHigh] = useState(false);
+  const [discountHighToLow, setDiscountHighToLow] = useState(false);
+
+  const router = useRouter();
+  const categoryName = router.query.categoryId;
+  const {token} = useContext(GlobalContext)
+
+
+
+  // min to max price
+
+  const handleChange = (event) => {
+    
+                  
+     if(event.target.value === "discount-low-to-high"){
+      setDiscountLowToHigh(true)
+      setDiscountHighToLow(false)
+     }
+     else if(event.target.value === "discount-high-to-low"){
+      setDiscountLowToHigh(false)
+      setDiscountHighToLow(true)
+     }
+     
+      setValue(event.target.value);
+     
+  };
+
+
+  // stock product 
+
+  const handleStockChange = (event) => {
+    setStockChecked(event.target.checked);
+  };
+
+//  new release wise sort 
+
+  const handleNewReleaseChange = (event) => {
+    const isNewRelease = event.target.checked;
+    setNewRelease(isNewRelease);
+  };
+   
+   
+   step 2 : 
+   
+   
+   
+   // sorted  category product 
+
+  const sortedData = CatAllData?.categoryWiseProducts?.edges
+  ?.slice()
+  ?.sort((a, b) => {
+
+    if (discountLowToHigh) {
+      return a?.node?.variantStocks?.edges[0]?.node?.discount - b?.node?.variantStocks?.edges[0]?.node?.discount;
+    } else if (discountHighToLow) {
+      return b?.node?.variantStocks?.edges[0]?.node?.discount - a?.node?.variantStocks?.edges[0]?.node?.discount;
+    } else if (value === "min") {
+      return a?.node?.variantStocks?.edges[0]?.node?.sellPrice - b?.node?.variantStocks?.edges[0]?.node?.sellPrice;
+    } else if (value === "max") {
+      return b?.node?.variantStocks?.edges[0]?.node?.sellPrice - a?.node?.variantStocks?.edges[0]?.node?.sellPrice;
+    }
+
+
+    
+  });
+
+// Filter the sorted data based on minPrice,maxPrice ,rating,stock
+
+const filteredData = sortedData?.filter((item) => {
+  const sellPrice = item?.node?.variantStocks?.edges[0]?.node?.sellPrice;
+  const quantity = item?.node?.variantStocks?.edges[0]?.node?.quantity;
+  let avgRating = item?.node?.avarageRating;
+  const NewRelizeProduct = item?.node?.productUsedStatus;
+
+  if (avgRating === 0) {
+    avgRating = 4.8;
+  }
+
+  if (stockChecked) {
+    return (minPrice === '' || sellPrice >= minPrice) &&
+      (maxPrice === '' || sellPrice <= maxPrice) && 
+      (rating === '' || avgRating >= rating) &&
+      (newRelease ? NewRelizeProduct === "New" : true) &&
+      quantity >= 1;
+  } else {
+    return (minPrice === '' || sellPrice >= minPrice) &&
+      (maxPrice === '' || sellPrice <= maxPrice) && 
+      (rating === '' || avgRating >= rating) &&
+      (newRelease ? NewRelizeProduct === "New" : true) &&
+      quantity === 0;
+  }
+})
+
+
+  // reset drawer 
+  const handleRestProduct = () => {
+    setValue("min");
+    setMinPrice('');
+    setMaxPrice('');
+    setRating('');
+    setNewRelease(false);
+    setDiscountLowToHigh(false);
+    setDiscountHighToLow(false);
+
+  };
+    
+    
+ step 3 :  jsx code 
+ 
+ 
+   {filteredData?.map((product) => {
+                  return (
+                    <Grid
+                      item
+                      key={product?.node?.id}
+                      xs={6}
+                      sm={4}
+                      md={3}
+                      lg={3}
+                      xl={2.4}
+                      // className={styles.products_responsive_coantainer}
+                    
+                    >
+                      <Product
+                        product={product}
+                        canShowDollar={dollarShowOrHideData?.selfCountry?.canShowDollar}
+                        canShowCommissionDollar ={dollarShowOrHideData?.selfCountry?.canShowCommissionDollar}
+                      />
+                    </Grid>
+                  );
+                })}
+   

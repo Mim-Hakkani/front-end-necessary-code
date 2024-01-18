@@ -1,0 +1,152 @@
+Title : show the pic chart and text middle 
+Location : ehsan-enventory/reportreview 
+
+****************************** code ******************************************************************
+
+
+import { Chart as ChartJS, ArcElement, Tooltip as tootip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, tootip, Legend);
+
+export const datassss = {
+    labels: ['Shirt', 'Pants', 'Lungi','Jens','masum'],
+    listColor: [
+        'rgba(33, 88, 117, 0.7)',
+        'rgba(33, 88, 117, 0.5)',
+        'rgba(33, 88, 117, 0.3)',
+        'rgba(33, 88, 117, 1)',
+        'red',
+    ],
+    datasets: [
+      {
+        label: 'Hmim Votes',
+        data: [15,15,15,50,5],
+        backgroundColor: [
+            'rgba(33, 88, 117, 0.7)',
+            'rgba(33, 88, 117, 0.5)',
+            'rgba(33, 88, 117, 0.3)',
+            'rgba(33, 88, 117, 1)',
+            'red',
+        ],
+        borderColor: [
+            '#fff',
+            '#fff',
+            '#fff',
+            '#fff',
+            '#fff',
+        
+        ],
+        borderWidth:2,
+        hoverBorderWidth:1
+      },
+    ],
+  };
+
+
+
+
+****************************************** before return function ************************************************** 
+
+const totalSales = "15K"
+
+const textCenter ={
+    id:'textCenter',
+    beforeDatasetsDraw(chart,args,pluginOptions){
+        const {ctx,data}=chart;
+        ctx.save();
+        ctx.font="600 12px Inter";
+        ctx.fillStyle="#2b2b2b";
+        ctx.textAlign='center';
+        ctx.textBaseLine="middle";
+        const xPadding = 1; // Adjust the padding as needed
+        const yPadding = 1; // Adjust the padding as needed
+        
+        ctx.fillText(
+            totalSales,
+            chart.getDatasetMeta(0).data[0].x + xPadding,
+            chart.getDatasetMeta(0).data[0].y + yPadding
+        );
+
+    }
+}
+
+// show list styles 
+
+  const options = {
+    plugins: {
+      legend: {
+        display: false, // Hide the legends or chart level data in top 
+      },
+      tooltip: {
+        enabled: false, // Hide chart datass tooltips
+      },
+    },
+  }
+
+  //********************************************** jsx code  ****************************************************
+
+   
+  <Box sx={{
+    width:'30%',
+    display:'flex',      
+    justifyContent:'space-between',
+
+
+   }}>
+
+
+     <Box sx={{
+        overflow:'hidden',
+        height:'120px',
+        width:'120px',
+ 
+    }}>
+    
+    <Doughnut 
+    data={datassss}
+    plugins={[textCenter]} 
+    options={options}
+    />
+
+        </Box>
+
+
+        <ul style={{
+            width:'80%',
+            display:'inline-block',
+        }}>
+{datassss.labels.map((item, index,fff) => (
+<Box sx={{
+    fontSize:'16px',
+    fontFamily:"Inter",
+    display:'flex',
+    justifyContent:'space-between',
+    alignItems:'center'
+}}>
+    <Box> 
+    <span style={{
+        color:datassss?.listColor[index],
+        fontSize:'16px',
+        paddingRight:'10px'
+    }}> {'\u2022'}</span>
+    <Typography variant='caption'>{item}</Typography>
+    </Box>
+
+    <Typography variant='caption' sx={{
+        color: "#AAA",
+        textAlign: "right",
+        fontFamily: "Inter",
+        fontSize: "12px",
+        fontStyle: "normal",
+        fontWeight: 500,
+        lineHeight: "normal",
+        textTransform: "capitalize"
+    }}>{datassss?.datasets[0]?.data[index]}%</Typography>
+</Box>
+
+))}
+        </ul>
+
+   </Box>
+
