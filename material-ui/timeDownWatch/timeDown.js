@@ -14,7 +14,7 @@
       intervalId = setInterval(() => {
         setRemainingTime((prevTime) => {
           if (prevTime === 0) {
-            handleCloseConfirmOrderPayment();
+            handleCloseConfirmOrderPayment(); // used this function and state 
             return prevTime;
           }
           return prevTime - 1;
