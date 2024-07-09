@@ -27,3 +27,9 @@
 7. React Native Gifted Chat
 8. React Native Snap Carousel
 */
+/****************************************** Form input  *********************************************/
+/*
+1. React Native Radio Buttons Group
+2. @react-native-community/checkbox
+
+*/
