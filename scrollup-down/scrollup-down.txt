@@ -1,0 +1,141 @@
+import { useCallback, useEffect, useState } from 'react'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+//css styles
+import styles from '../../styles/scrillTop.module.css'
+import { Box } from '@mui/material'
+import debounce from 'lodash.debounce'
+
+const ScrollTop = () => {
+
+ 
+ /*** this code only used for scroll top **************/
+
+  // const [scrolltop, setScrolltop] = useState(false)
+
+  // useEffect(() => {
+  //   const scrollToTopHandler = () => {
+  //     if (window.scrollY > 200) {
+  //       setScrolltop(true)
+  //     } else {
+  //       setScrolltop(false)
+  //     }
+  //   }
+
+  //   window.addEventListener('scroll', scrollToTopHandler)
+
+  //   return () => {
+  //     setScrolltop(false)
+  //     window.removeEventListener('scroll', scrollToTopHandler)
+  //   }
+  // }, [])
+
+  // const scrollTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth',
+  //   })
+  // }
+
+
+  
+  
+  /************* This code is used only for scroll top down ***************************/ 
+
+  const [scrollY, setScrollY] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showScrollBottom, setShowScrollBottom] = useState(false);
+
+
+  const handleScroll = useCallback(
+    debounce(() => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+
+      if (currentScrollY > 700) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+
+      const windowHeight = window.innerHeight;
+      const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+      );
+
+      if (documentHeight - currentScrollY > windowHeight + 500) {
+        setShowScrollBottom(true);
+      } else {
+        setShowScrollBottom(false);
+      }
+    }, 200),
+    []
+  );
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToBottom = () => {
+    const documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+    window.scrollTo({ top: documentHeight, behavior: 'smooth' });
+  };
+  
+
+  return (
+    <Box sx={{display:{xs:'none',sm:'block'}}}>
+    
+    /**** only used scroll top ************* / 
+    
+    
+      {/* {scrolltop && (
+        <button className={styles.scrollbutton} onClick={scrollTop}>
+          <ExpandLessIcon sx={{ fontSize: '30px' }} />
+        </button>
+      )} */}
+
+
+
+ /********************** only used scroll top and down *******************************/
+ 
+  
+
+{showScrollTop && (
+        <KeyboardArrowUpIcon
+          onClick={scrollToTop}
+          sx={{ position: 'fixed', bottom: '20px', right: '20px', backgroundColor: '#FFA700', color: '#fff', borderRadius: '50%', height: '25px', width: '25px' }}
+        />
+      )}
+
+      {showScrollBottom && (
+        <KeyboardArrowDownIcon
+          onClick={scrollToBottom}
+          sx={{ position: 'fixed', bottom: '48px', right: '20px', backgroundColor: '#FFA700', color: '#fff', borderRadius: '50%', height: '25px', width: '25px' }}
+        />
+      )}
+
+
+    </Box>
+  )
+}
+
+export default ScrollTop
+
