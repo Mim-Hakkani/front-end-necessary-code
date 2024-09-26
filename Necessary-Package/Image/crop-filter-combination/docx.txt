@@ -1,0 +1,2 @@
+This section use phone camera to capture photo , then rotated and zoom,and crop image and also filter image  
+ 
