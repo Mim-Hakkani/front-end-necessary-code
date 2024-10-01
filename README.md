@@ -12,3 +12,4 @@
 * tags input works as tags and click close then remove from array 
 * slider customized range 
 * checkbox customized color and label 
+* click anywhre then close the modal
