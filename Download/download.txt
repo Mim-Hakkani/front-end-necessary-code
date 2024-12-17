@@ -1,0 +1,147 @@
+  const canvasRef = useRef(null);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+
+ ***************************************** download with image and Qrcode or Text *************************************************** 
+ 
+  const drawImageWithQRCode = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      console.error("Canvas is not properly referenced");
+      return;
+    }
+    const ctx = canvas.getContext("2d");
+  
+    const image = new Image();
+    image.crossOrigin = "anonymous"; // For CORS issues
+    image.src = "https://i.ibb.co.com/nCGS7QH/car-download.png"; 
+    image.src = "https://ehsanmarketingbucket.s3.ap-south-1.amazonaws.com/images/images/Sricker5.png"; 
+    
+    // Corrected Image URL
+    // https://ehsanmarketingbucket.s3.ap-south-1.amazonaws.com/images/images/Sricker5.png
+ 
+    image.onload = () => {
+      canvas.width = image.width;
+      canvas.height = image.height;
+  
+      // Draw the image on the canvas
+      ctx.drawImage(image, 0, 0);
+  
+      // Create a QR code canvas element
+      const qrCanvas = document.createElement("canvas");
+      const qrCodeSize = 150; // QR code size
+      qrCanvas.width = qrCodeSize;
+      qrCanvas.height = qrCodeSize;
+  
+      QRCode.toCanvas(
+        qrCanvas,
+        "https://www.ehsanmarketing.com/website/mim", // QR code content
+        { width: qrCodeSize, color: { dark: "#2b2b2b", light: "#BEBEBE" } },
+        (error) => {
+          if (error) {
+            console.error("QR Code generation failed:", error);
+          } else {
+            ctx.drawImage(
+              qrCanvas,
+              canvas.width - qrCodeSize - 50,
+              canvas.height - qrCodeSize - 60
+            );
+            setIsImageLoaded(true);
+          }
+        }
+      );
+    };
+  
+    image.onerror = () => {
+      console.error("Error loading image");
+    };
+  };
+  
+  
+  
+  
+
+  useEffect(() => {
+    drawImageWithQRCode(); // Run the function when the component mounts
+  }, []);
+  
+  
+  
+  ********************** download main function ***********************
+
+  const handleDownload = () => {
+    if (isImageLoaded) {
+      const canvas = canvasRef.current;
+      const link = document.createElement("a");
+      const dataUrl = canvas.toDataURL("image/png");
+      link.href = dataUrl;
+      link.download = "image-with-qr-code.png";
+      link.click();
+    } else {
+      console.log("Image is not loaded yet!");
+    }
+  };
+  
+  /******************************************* frontend **********************************************/
+  
+     <Button
+              sx={{
+                color: "#fff",
+                ml: 2,
+                background: "#45B9E0",
+                textTransform: "inherit",
+                fontWeight:'400',
+                fontSize:'13px',
+                height: "30px",
+                ":hover": {
+                  background: "#45B9E0",
+                },
+              }}
+              variant="contained"
+              onClick={handleDownload}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16px"
+                height="16px"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#fff"
+                  d="M8 17v-2h8v2zm8-7l-4 4l-4-4h2.5V7h3v3zM5 3h14a2 2 0 0 1 2 2v14c0 1.11-.89 2-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2m0 2v14h14V5z"
+                />
+              </svg>
+              <span style={{ marginLeft: "5px" }}>Download</span>
+            </Button>
+            
+            
+ ********************************************* just show image ****************************************
+ 
+    <div
+        
+            style={{
+              width: "580px",
+              height: "212px",
+              backgroundImage: "url('/images/car-sticker.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              margin: "50px auto",
+              display: "block",
+              position: "relative",
+            }}
+          >
+            <QRCodeReact
+              value={`https://www.ehsanmarketing.com/website/mim`}
+              size={90}
+              fgColor="#2b2b2b"
+              bgColor="#BEBEBE"
+              style={{
+                position: "absolute",
+                right: "16px",
+                bottom: "16px",
+              }}
+            />
+          </div>
+            
+            
+            
