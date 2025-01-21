@@ -1,0 +1,65 @@
+
+/****************** package name : lodash ************************/
+
+
+
+import React, { useState } from 'react';
+import { debounce } from 'lodash';
+
+
+const Debounce = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // debounce function
+  const handleSearch = debounce((event) => {
+    setSearchTerm(event.target.value);
+    console.log("Searching for:", event.target.value);
+  }, 500); // 500ms debounce delay
+
+
+  return (
+    <div>
+      
+      <input
+        type="text"
+        onChange={handleSearch}
+        placeholder="Search..."
+      />
+  
+    </div>
+  );
+};
+
+export default Debounce;
+
+/************************************** debounce ******************************
+
+        package name :  npm install debounce
+
+**********************************************
+
+import React, { useState } from 'react';
+import debounce from 'debounce';
+
+const SearchComponent = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Debounced search function
+  const handleSearch = debounce((event) => {
+    setSearchTerm(event.target.value);
+    console.log("Searching for:", event.target.value);
+  }, 500); // 500ms debounce delay
+
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={handleSearch}
+        placeholder="Search..."
+      />
+    </div>
+  );
+};
+
+export default SearchComponent;
+

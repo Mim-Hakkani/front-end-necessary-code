@@ -1,0 +1,253 @@
+  const handleChange = (event, index) => {
+    const file = event.target.files[0];
+    if (file) {
+      const newImages = [...images];
+      newImages[index] = file;
+      setImages(newImages);
+
+      // Add a new slot only if this is the last one
+      if (index === images.length - 1) {
+        setImages([...newImages, null]);
+      }
+
+      // for scroll top
+
+      // console.log("newImages::",newImages);
+
+      if (newImages.filter((image,index) => image !== null).length % 3===0) {
+        if (containerRef.current) {
+          setTimeout(() => {
+            containerRef.current.scrollTo({
+              top: containerRef.current.scrollHeight, // Scroll to the bottom
+              behavior: "smooth", // Smooth scrolling
+            });
+          }, 0);
+        }
+      }
+    }
+  };
+  
+  *******************************************
+  
+    const containerRef = useRef(null);
+    
+    
+    **********************************************
+    
+      <Box ref={containerRef} sx={{ height: "440px", overflow: "auto" }}>
+            <Box sx={{ mb: "30px" }}>
+              {/* consumer name  */}
+              <Box sx={{ display: "flex", gap: "10px", mb: "7px" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#676A79FA",
+                    fontSize: "14px",
+                    fontFamily: "Roboto",
+                    width: "116px",
+                  }}
+                >
+                  Consumer Name
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#2b2b2b",
+                    fontSize: "14px",
+                    fontFamily: "Roboto",
+                    fontWeight: "600",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "#676A79FA",
+                      fontSize: "14px",
+                      fontFamily: "Roboto",
+                      fontWeight: "400",
+                      marginRight: "4px",
+                    }}
+                  >
+                    :
+                  </span>{" "}
+                  {router.query.firstName} {router.query.lastName}
+                </Typography>
+              </Box>
+
+              {/* consumer cin  */}
+
+              <Box sx={{ display: "flex", gap: "10px", mb: "7px" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#676A79FA",
+                    fontSize: "14px",
+                    fontFamily: "Roboto",
+                    width: "116px",
+                  }}
+                >
+                  Consumer CIN
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#2b2b2b",
+                    fontSize: "14px",
+                    fontFamily: "Roboto",
+                    fontWeight: "600",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "#676A79FA",
+                      fontSize: "14px",
+                      fontFamily: "Roboto",
+                      fontWeight: "400",
+                      marginRight: "4px",
+                    }}
+                  >
+                    :
+                  </span>{" "}
+                  {router?.query?.cin}
+                </Typography>
+              </Box>
+            </Box>
+
+            <Divider
+              sx={{
+                backgroundColor: "#D5DBE3", // Sets the visible line color
+                height: "1px", // Optional: adjust thickness
+                width: "100%",
+                mb: "30px",
+              }}
+            />
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                mt: "5px",
+              }}
+            >
+              <AntSwitch
+                checked={isShowDocument}
+                onChange={handleShowViewDocument}
+                inputProps={{ "aria-label": "ant design" }}
+              />
+
+              <Typography
+                variant="body1"
+                sx={{ fontSize: "14px", color: "#2b2b2b" }}
+              >
+                Consumers will be able to view the documents.
+              </Typography>
+            </Box>
+
+            <div>
+              <Box>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: "500",
+                    fontSize: "18px",
+                    py: 2,
+                  }}
+                >
+                  Add Documents
+                </Typography>
+              </Box>
+
+              <Grid container spacing={2.5} sx={{ pr: 3 }}>
+                {images.map((image, index) => (
+                  <Grid item sm={4} md={4} lg={4} xl={4} key={index}>
+                    <Box
+                      sx={{
+                        backgroundColor: "#EFEFEF",
+                        py: "18px",
+                        borderRadius: "7px",
+                        position: "relative",
+                      }}
+                    >
+                      {image ? (
+                        <>
+                          <img
+                            src={URL.createObjectURL(image)}
+                            style={{
+                              width: "220px",
+                              height: "180px",
+                              margin: "0 auto",
+                              display: "block",
+                              borderRadius: "4px",
+                            }}
+                            alt="category-icon"
+                          />
+                        </>
+                      ) : (
+                        <img
+                          src="/images/addimage.png"
+                          style={{
+                            width: "220px",
+                            height: "180px",
+                            margin: "0 auto",
+                            display: "block",
+                          }}
+                          alt="category-icon"
+                        />
+                      )}
+
+                      <label htmlFor={`contained-button-file-${index}`}>
+                        <Input
+                          accept="image/*"
+                          id={`contained-button-file-${index}`}
+                          type="file"
+                          name="photo"
+                          sx={{ display: "none" }}
+                          onChange={(event) => handleChange(event, index)}
+                        />
+                        <Button
+                          component="span"
+                          sx={{
+                            border: "1px solid #D4D7DA",
+                            borderRadius: "2px",
+                            background: "#fff",
+                            color: "#2b2b2b",
+                            fontSize: "13px",
+                            textTransform: "capitalize",
+                            width: "220px",
+                            m: "0 auto",
+                            textAlign: "center",
+                            display: "block",
+                            mt: "10px",
+
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "5px",
+
+                            ":hover": {
+                              background: "#FFF5E9",
+                            },
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16px"
+                            height="16px"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill="#404040"
+                              d="M12 2.586L17.914 8.5L16.5 9.914l-3.5-3.5V16h-2V6.414l-3.5 3.5L6.086 8.5zM4.5 14v5h15v-5h2v7h-19v-7z"
+                            />
+                          </svg>{" "}
+                          <span>Upload</span>
+                        </Button>
+                      </label>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+          </Box>
