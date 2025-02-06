@@ -13,3 +13,15 @@
 
 
  <Box ref={containerRef} sx={{height:'440px',overflow:'auto'}}></Box>
+ 
+ 
+ /***************************************************  2nd process **************************************************/
+ 
+   const bottomRef = useRef(null);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [ekhane dependency dite hobe]);
+  
