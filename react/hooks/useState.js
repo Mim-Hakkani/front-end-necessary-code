@@ -64,19 +64,21 @@ setCount(prevCount => prevCount + 1);
 
 ****************************************************  Example 1
 
-function handleClick() {
-  setAge(age + 1); // setAge(42 + 1)
-  setAge(age + 1); // setAge(42 + 1)
-  setAge(age + 1); // setAge(42 + 1)
-}
+
 
 import { useState } from 'react';
 
 export default function Counter() {
   const [age, setAge] = useState(42);
 
+function handleClick() {
+  setAge(age + 1); // setAge(42 + 1)
+  setAge(age + 1); // setAge(42 + 1)
+  setAge(age + 1); // setAge(42 + 1)
+}
+
   function increment() {
-    setAge(a => a + 1);
+    setAge(a=>a + 1);
   }
 
   return (
