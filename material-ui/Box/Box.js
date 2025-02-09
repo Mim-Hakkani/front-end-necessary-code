@@ -68,7 +68,3 @@ Custom Breakpoints দিয়ে Responsive Design করতে পারেন�
 
 */
 
-
-
-
-<Box display="flex" jus>THis is the red div</Box>
