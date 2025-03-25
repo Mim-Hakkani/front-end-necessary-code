@@ -1,0 +1,72 @@
+import React, { useState, useRef } from "react";
+import html2canvas from "html2canvas";
+
+
+const Certificate = () => {
+  const [userName, setUserName] = useState(""); // ডায়নামিক নাম স্টোর করার জন্য
+  const certificateRef = useRef(null); // ডিভ রেফারেন্স
+
+  // ডাউনলোড ফাংশন
+  const handleDownload = () => {
+    html2canvas(certificateRef.current).then((canvas) => {
+      const link = document.createElement("a");
+      link.download = "certificate.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  };
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      {/* নাম ইনপুট ফিল্ড */}
+      <div>
+        <label>তোমার নাম লিখো: </label>
+        <input
+          type="text"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          placeholder="তোমার নাম"
+        />
+      </div>
+
+      {/* সার্টিফিকেট ডিভ */}
+      <div
+        ref={certificateRef}
+        style={{
+          position: "relative",
+          width: "fit-content",
+          margin: "20px auto",
+        }}
+      >
+        {/* ব্যাকগ্রাউন্ড ইমেজ */}
+        <img
+          src="/images/certificatetest.png"
+          alt="Certificate"
+          style={{ width: "600px", height: "auto" }}
+        />
+        {/* ডায়নামিক নাম */}
+        <div
+          style={{
+            position: "absolute",
+            top: "50%", // ইমেজের মাঝে নাম বসানোর জন্য
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "30px",
+            fontWeight: "bold",
+            color: "#4B0082", // ইমেজের নামের কালারের সঙ্গে মিলিয়ে
+            fontFamily: "Times New Roman", // ফন্ট মিলিয়ে
+          }}
+        >
+          {userName || "User Name"} {/* নাম না থাকলে ডিফল্ট "User Name" দেখাবে */}
+        </div>
+      </div>
+
+      {/* ডাউনলোড বাটন */}
+      <button onClick={handleDownload} style={{ padding: "10px 20px" }}>
+        সার্টিফিকেট ডাউনলোড করো
+      </button>
+    </div>
+  );
+};
+
+export default Certificate;

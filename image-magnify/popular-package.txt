@@ -1,0 +1,6 @@
+1.react-image-magnify 
+2.react-image-magnifiers
+3.npm install react-image-magnifier-zoom
+4.react-magnifier
+5.React Inner Image Zoom Component
+6. html2canvas [image to text converter]
